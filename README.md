@@ -71,8 +71,13 @@ Expected output:
 Hello, DevOps!
 ```
 
-*(Add a screenshot here showing the `docker build` and `docker run`
-output.)*
+Since this was built and tested on a resource-limited machine, the
+build and run were validated inside GitHub Actions instead
+(see `.github/workflows/ci.yml`). Screenshot below shows the CI run
+building the image and executing the container, printing
+`Hello, DevOps!`:
+
+![Docker build and run in CI](container.png)
 
 ---
 
@@ -84,6 +89,10 @@ reflects the latest run.
 
 You can also trigger it manually from the **Actions** tab using
 "workflow_dispatch."
+
+Successful run, printing `Hello, DevOps!`:
+
+![CI run](run.png)
 
 ---
 
@@ -103,6 +112,11 @@ nomad job status hello-devops
 > devops-intern-final-hello:latest .`) so the Nomad Docker driver can
 > find it, or push it to a registry and update the `image` field in
 > `hello.nomad` accordingly.
+
+**Not executed live in this submission** due to local machine resource
+constraints (limited RAM, no WSL). The job file above is provided as
+the deliverable and follows the required `type = "service"` spec with
+minimal CPU/memory allocation.
 
 ---
 
