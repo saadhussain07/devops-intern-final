@@ -1,0 +1,45 @@
+Loki Setup Notes
+================
+
+How I started Loki (local Docker):
+-----------------------------------
+1. Pulled and ran the official Loki image, exposing port 3100:
+
+   docker run -d --name=loki -p 3100:3100 grafana/loki:2.9.0 -config.file=/etc/loki/local-config.yaml
+
+2. Ran Grafana alongside it so logs could be viewed in a dashboard:
+
+   docker run -d --name=grafana -p 3000:3000 grafana/grafana:latest
+
+3. In Grafana (http://localhost:3000, default login admin/admin):
+   - Went to Connections > Data Sources > Add data source
+   - Selected "Loki"
+   - Set URL to http://loki:3100 (or http://host.docker.internal:3100 if not on the same Docker network)
+   - Saved and tested the connection
+
+Forwarding container logs to Loki:
+-----------------------------------
+Used the Docker Loki logging driver so the hello.py container's logs are
+shipped straight to Loki:
+
+   docker run --log-driver=loki \
+     --log-opt loki-url="http://localhost:3100/loki/api/v1/push" \
+     devops-intern-final-hello
+
+(Alternative: run Promtail as a sidecar/agent pointed at the Docker log
+directory and configure it to push to Loki, which is the recommended
+approach for Nomad-managed jobs where logs come from many allocations.)
+
+The command I used to view logs:
+-----------------------------------
+Via Grafana Explore:
+  - Grafana > Explore > select Loki data source
+  - Query: {container="devops-intern-final-hello"}
+
+Via LogCLI (command line alternative):
+  - logcli query '{container="devops-intern-final-hello"}' --addr="http://localhost:3100"
+
+Screenshot:
+-----------------------------------
+See README.md for the screenshot of the Grafana Explore view showing
+"Hello, DevOps!" log lines coming through Loki.
