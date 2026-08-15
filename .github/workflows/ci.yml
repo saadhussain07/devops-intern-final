@@ -19,3 +19,9 @@ jobs:
 
       - name: Run hello.py
         run: python hello.py
+      
+      - name: Build Docker image
+        run: docker build -t devops-intern-final-hello .
+
+      - name: Run Docker container
+        run: docker run --rm devops-intern-final-hello

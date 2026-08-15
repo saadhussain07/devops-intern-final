@@ -11,7 +11,7 @@ Actions (CI/CD), HashiCorp Nomad (job scheduling/deployment), and
 Grafana Loki (log monitoring). Each step produces a real artifact used
 by the next step, simulating a realistic DevOps pipeline end to end.
 
-![CI](https://github.com/<your-username>/devops-intern-final/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/saadhussain07/devops-intern-final/actions/workflows/ci.yml/badge.svg)
 
 ---
 
